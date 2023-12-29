@@ -53,5 +53,26 @@ class AdminVoyagesController extends AbstractController{
         $this->repository->remove($visite, true);
         return $this->redirectToRoute('admin.voyages');
     }
+    /**
+     * @Route("/admin/edit/{id}", name="admin.voyage.edit")
+     * @param int $id
+     * @return Response
+     */
+    public function edit(int $id, Request $request) : Response{
+        $visite = $this->repository->find($id);
+        $formVisite = $this->createForm(\App\Form\VisiteType::class, $visite);
+        
+        $formVisite->handleRequest($request);
+        if($formVisite->isSubmitted() && $formVisite->isValid()){
+            $this->repository->add($visite, true);
+            return $this->redirectToRoute('admin.voyages');
+        }
+        
+        return $this->render("admin/admin.voyage.edit.html.twig", [
+            'visite' => $visite,
+            'formvisite' => $formVisite->createView()
+                
+        ]);
+    }
 
 }
