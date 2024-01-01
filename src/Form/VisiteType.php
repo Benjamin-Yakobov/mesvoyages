@@ -38,6 +38,10 @@ class VisiteType extends AbstractType
                 'multiple' => true,
                 'required' => false
             ])
+            ->add('imageFile', \Symfony\Component\Form\Extension\Core\Type\FileType::class, [
+                'required' => false,
+                'label' => 'sélection image'
+            ])
             ->add('submit', SubmitType::class, [
                 'label' => 'Enregistrer'
             ])
